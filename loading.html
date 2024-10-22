@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podsynth Loading</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Internal CSS -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #181818; /* Darker shade of black */
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .loading-container {
+            text-align: center;
+            position: relative;
+        }
+
+        /* Podcast mic icon */
+        .podcast-mic {
+            width: 120px;
+            height: 120px;
+            background: url('https://cdn-icons-png.flaticon.com/512/3771/3771390.png') no-repeat center;
+            background-size: cover;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Sinusoidal wave effect */
+        .wave {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            width: 250px;
+            height: 50px;
+            background: transparent;
+            border-top: 2px solid #007bff;
+            border-radius: 100%;
+            transform: translate(-50%, -50%);
+            animation: wave-animation 2s ease-in-out infinite;
+        }
+
+        @keyframes wave-animation {
+            0% {
+                transform: translate(-50%, -50%) scaleX(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scaleX(1.5);
+            }
+            100% {
+                transform: translate(-50%, -50%) scaleX(1);
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-top: 20px;
+            color: #00aced;
+            text-shadow: 0 0 10px #007bff;
+        }
+
+        .loading-text {
+            font-size: 1rem;
+            margin-top: 15px;
+            color: #b0b0b0; /* Light font color */
+            font-weight: 300;
+        }
+
+        /* Humor text */
+        .humor-text {
+            font-size: 1rem;
+            margin-top: 10px;
+            color: #ccc; /* Light gray for humor lines */
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            position: relative;
+        }
+
+        /* Show and hide humor lines */
+        .visible {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="loading-container">
+        <!-- Podcast image above Podsynth text -->
+        <div class="podcast-mic"></div>
+        <div class="wave"></div>
+        <h1>Podsynth</h1>
+        <div class="loading-text">Loading, please wait...</div>
+        <div id="humor-lines" class="humor-text"></div>
+    </div>
+
+    <!-- JavaScript for automatic redirection and rotating humor lines -->
+    <script>
+        // Redirect to the homepage after 30 seconds
+        setTimeout(function() {
+            window.location.href = "homepage.html"; // Change this to your actual homepage
+        }, 31000); // 31 seconds
+
+        // Humor lines
+        const humorLines = [
+            "Summarizing podcasts so you don't have to!",
+            "AI: Turning hours of podcasts into minutes!",
+            "Leave the summarizing to us. Enjoy your coffee!",
+            "Podcasts + AI = Less time, more knowledge!",
+            "AI doesn't sleep, but it listens better than us!",
+            "Made by Usama, Awez, Furqan, Ashraf!"
+        ];
+
+        let currentIndex = 0;
+
+        function showNextLine() {
+            const humorElement = document.getElementById("humor-lines");
+            humorElement.classList.remove("visible");
+            
+            setTimeout(() => {
+                humorElement.textContent = humorLines[currentIndex];
+                humorElement.classList.add("visible");
+                currentIndex = (currentIndex + 1) % humorLines.length; // Loop through the lines
+            }, 500); // Give a brief pause before switching text
+        }
+
+        // Show a new humor line every 6 seconds
+        setInterval(showNextLine, 5800);
+
+        // Initial load
+        showNextLine();
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
