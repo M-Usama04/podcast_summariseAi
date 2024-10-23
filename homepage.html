@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podsynth - Home</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Internal CSS -->
+    <style>
+        body {
+            background-color: #1a1a1a; /* Dark background */
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Header Style */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            color: #00ccff; /* Bright color for title */
+            font-size: 2.5rem; /* Large title size */
+            margin: 0;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: 2px solid #00ccff;
+            border-radius: 25px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-buttons a:hover {
+            background-color: #00ccff;
+            color: black;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 50px 20px; /* Space for features */
+            text-align: center;
+        }
+
+        .features-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #00ccff;
+        }
+
+        .feature {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #2c2c2c; /* Darker background for features */
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            opacity: 0; /* Initially hidden for animation */
+            transform: translateY(20px); /* Initial position for animation */
+        }
+
+        .feature:hover {
+            background-color: #3a3a3a; /* Lighter background on hover */
+            box-shadow: 0 4px 15px rgba(0, 204, 255, 0.5); /* Shadow effect on hover */
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            color: #00ccff;
+        }
+
+        /* Get Started Button Section */
+        .get-started-section {
+            text-align: center;
+            padding: 20px;
+            background-color: #1c1c1c;
+        }
+
+        .get-started {
+            padding: 12px 25px;
+            font-size: 1.3rem;
+            background-color: #00ccff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .get-started:hover {
+            background-color: #007acc;
+            color: black;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #2c2c2c;
+            padding: 20px;
+            text-align: center;
+            color: #00ccff;
+            position: relative; /* Ensure footer is positioned at the bottom */
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #00ccff;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .get-started {
+                font-size: 1.1rem;
+                padding: 10px 20px;
+            }
+
+            .feature h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Podsynth</h1>
+        <div class="nav-buttons">
+            <a href="#login">Sign Up / Login</a>
+            <a href="#about">About</a>
+            <a href="#guide">Guide</a>
+            <a href="#" onclick="viewSummaries()">View your Summaries</a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2>Features of Podsynth</h2>
+
+        <div class="feature" id="feature1">
+            <h3>AI-Generated Summaries</h3>
+            <p>Effortlessly condense hours of podcast content into concise summaries. Our AI analyzes the audio, highlighting key points and providing a comprehensive overview to save you time.</p>
+        </div>
+
+        <div class="feature" id="feature2">
+            <h3>Sentiment & Emotion Detection</h3>
+            <p>Understand the emotions behind the words. Our sentiment analysis tool detects the emotional tone of the speakers, enhancing your understanding of the content.</p>
+        </div>
+
+        <div class="feature" id="feature3">
+            <h3>Multi-Language Translation</h3>
+            <p>Translate podcast summaries into multiple languages, making the content accessible to a broader audience and breaking down language barriers.</p>
+        </div>
+
+        <div class="feature" id="feature4">
+            <h3>Accessibility for Everyone</h3>
+            <p>Designed to be accessible for users with disabilities, ensuring that everyone can benefit from our services without barriers.</p>
+        </div>
+
+        <div class="feature" id="feature5">
+            <h3>Audio & Video Compatibility</h3>
+            <p>Upload both audio and video files for comprehensive analysis. Our platform supports various formats to cater to your needs.</p>
+        </div>
+
+        <div class="feature" id="feature6">
+            <h3>Speaker Recognition</h3>
+            <p>Recognize and differentiate multiple speakers in podcasts. Our technology provides clearer context in summaries by identifying who said what.</p>
+        </div>
+    </section>
+
+    <!-- Get Started Section -->
+    <section class="get-started-section">
+        <button class="get-started" onclick="redirectToMainPage()">Let’s Get Started</button>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Podsynth. All Rights Reserved.</p>
+        <a href="#">Home</a> |
+        <a href="#about">About Us</a> |
+        <a href="mailto:usamamulla04@gmail.com">Contact Us</a> |
+        <a href="#guide">Guide</a> |
+        <a href="#privacy">Privacy Policy</a>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Redirect functions
+        function redirectToMainPage() {
+            window.location.href = 'main.html'; // Change to your main page URL
+        }
+
+        function viewSummaries() {
+            window.location.href = 'summaries.html'; // Change to your summaries page URL
+        }
+
+        // Fade-in animation for features
+        window.onload = function() {
+            const features = document.querySelectorAll('.feature');
+            features.forEach((feature, index) => {
+                setTimeout(() => {
+                    feature.style.opacity = 1;
+                    feature.style.animation = 'fadeIn 0.5s forwards';
+                }, index * 300); // Stagger the animations
+            });
+        };
+    </script>
+
+    <style>
+        /* Initial hidden state for features */
+        .feature {
+            opacity: 0; /* Initially hidden for animation */
+        }
+    </style>
+</body>
+</html>

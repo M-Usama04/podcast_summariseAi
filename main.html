@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podsynth - Main</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Internal CSS -->
+    <style>
+        body {
+            background-color: #1a1a1a; /* Dark background */
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Header Style */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            color: #00ccff; /* Bright color for title */
+            font-size: 2.5rem; /* Large title size */
+            margin: 0;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: 2px solid #00ccff;
+            border-radius: 25px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-buttons a:hover {
+            background-color: #00ccff;
+            color: black;
+        }
+
+        /* Audio Upload Section */
+        .upload-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            height: 100vh; /* Full height of the screen */
+        }
+
+        .upload-btn {
+            background-color: #00ccff;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .upload-btn:hover {
+            background-color: #007acc;
+        }
+
+        /* Audio Player Section */
+        .audio-player {
+            margin-top: 20px;
+            display: none; /* Hidden initially */
+            text-align: center;
+        }
+
+        /* Wave Animation */
+        .wave {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-top: 20px;
+            height: 50px; /* Fixed height for wave */
+        }
+
+        .wave div {
+            width: 5px;
+            background-color: #00ccff;
+            margin: 0 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { height: 20px; }
+            50% { height: 40px; }
+        }
+
+        /* Action Buttons Section */
+        .action-buttons {
+            display: none; /* Hidden initially */
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .action-buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            background-color: #00ccff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-buttons button:hover {
+            background-color: #007acc;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #2c2c2c;
+            padding: 20px;
+            text-align: center;
+            color: #00ccff;
+        }
+
+        footer a {
+            color: #00ccff;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Podsynth</h1>
+        <div class="nav-buttons">
+            <a href="#about">About</a>
+            <a href="#guide">Guide</a>
+            <a href="#privacy">Privacy Policy</a>
+        </div>
+    </header>
+
+    <!-- Audio Upload Section -->
+    <section class="upload-section">
+        <h2>Upload Your Podcast Audio</h2>
+        <label class="upload-btn" for="audioUpload">Choose File</label>
+        <input type="file" id="audioUpload" accept="audio/*" onchange="handleFileUpload(event)" style="display: none;">
+        
+        <div class="audio-player" id="audioPlayer">
+            <audio controls id="audioElement"></audio>
+            <div class="wave" id="waveContainer"></div>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button onclick="summarizePodcast()">Summarize Podcast</button>
+            <button onclick="translatePodcast()">Translate Podcast</button>
+            <button onclick="analyzeSentiment()">Sentiment Analysis</button>
+            <button onclick="generateKeyPoints()">Generate Key Points</button>
+            <button onclick="takeNotes()">Take Notes</button>
+            <button onclick="convertAudioToText()">Convert Audio to Text</button>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Podsynth. All Rights Reserved.</p>
+        <a href="#about">About Us</a> |
+        <a href="mailto:usamamulla04@gmail.com">Contact</a> |
+        <a href="#guide">Guide</a> |
+        <a href="#privacy">Privacy Policy</a>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        let audioFile;
+
+        // Handle audio file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                audioFile = URL.createObjectURL(file); // Create a URL for the audio file
+                const audioElement = document.getElementById('audioElement');
+                audioElement.src = audioFile;
+                audioElement.play(); // Play the audio automatically
+                document.getElementById('audioPlayer').style.display = 'block'; // Show audio player
+                document.getElementById('actionButtons').style.display = 'block'; // Show action buttons
+                createWaveAnimation(file.size); // Create wave animation
+                audioElement.onplay = () => { generateWaveAnimation(); }; // Generate wave animation while playing
+            }
+        }
+
+        // Function to create wave animation based on audio duration
+        function createWaveAnimation(size) {
+            const waveContainer = document.getElementById('waveContainer');
+            waveContainer.innerHTML = ''; // Clear previous waves
+
+            const waveCount = Math.min(size / 10000, 50); // Calculate wave count based on size (dummy logic)
+            for (let i = 0; i < waveCount; i++) {
+                const waveDiv = document.createElement('div');
+                waveDiv.style.animationDelay = `${i * 0.1}s`; // Delay for wave animation
+                waveContainer.appendChild(waveDiv);
+            }
+        }
+
+        // Function to generate wave animation while audio is playing
+        function generateWaveAnimation() {
+            const waveDivs = document.querySelectorAll('.wave div');
+            waveDivs.forEach((div, index) => {
+                div.style.animationDuration = `${1 + index * 0.1}s`; // Vary animation speed
+            });
+        }
+
+        // Dummy functions for button actions
+        function summarizePodcast() {
+            alert('Summarizing podcast...');
+            // Add your summarization logic here
+        }
+
+        function translatePodcast() {
+            alert('Translating podcast...');
+            // Add your translation logic here
+        }
+
+        function analyzeSentiment() {
+            alert('Analyzing sentiment...');
+            // Add your sentiment analysis logic here
+        }
+
+        function generateKeyPoints() {
+            alert('Generating key points...');
+            // Add your key points generation logic here
+        }
+
+        function takeNotes() {
+            alert('Taking notes...');
+            // Add your note-taking logic here
+        }
+
+        function convertAudioToText() {
+            alert('Converting audio to text...');
+            // Add your conversion logic here
+        }
+    </script>
+</body>
+</html>
